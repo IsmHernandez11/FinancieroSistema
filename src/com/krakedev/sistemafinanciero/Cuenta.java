@@ -1,6 +1,5 @@
 package com.krakedev.sistemafinanciero;
 
-
 public class Cuenta {
 	private String id;
 	private double saldoActual;
@@ -38,7 +37,6 @@ public class Cuenta {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
 
 	public Cliente getPropietario() {
 		return propietario;
@@ -49,11 +47,9 @@ public class Cuenta {
 	}
 
 	public void imprimir() {
-		System.out.println("ID: " + this.id 
-				+ "  ||  Saldo Actual: " + this.saldoActual 
-				+ "  ||  Tipo: " + this.tipo
+		System.out.println("ID: " + this.id + "  ||  Saldo Actual: " + this.saldoActual + "  ||  Tipo: " + this.tipo
 				+ "  ||  Cliente:");
-				propietario.imprimir();
+		propietario.imprimir();
 	}
 
 }

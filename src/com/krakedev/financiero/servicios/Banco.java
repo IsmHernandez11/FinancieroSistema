@@ -1,9 +1,11 @@
 package com.krakedev.financiero.servicios;
+import com.krakedev.sistemafinanciero.Cliente;
+import com.krakedev.sistemafinanciero.Cuenta;
 
 public class Banco {
 	private int ultimoCodigo = 1000;
 
-	public Banco() {
+	public Banco() {		
 	}
 
 	public int getUltimoCodigo() {
@@ -13,5 +15,50 @@ public class Banco {
 	public void setUltimoCodigo(int ultimoCodigo) {
 		this.ultimoCodigo = ultimoCodigo;
 	}
-
+	
+	public Cuenta crearCuenta(Cliente cliente) {
+		String codigoStr = ultimoCodigo + ""; 
+		ultimoCodigo++;
+		Cuenta cuenta = new Cuenta(codigoStr);
+		cuenta.setPropietario(cliente);
+		return cuenta;
+	}
+	
+	
+	public boolean depositar(double monto, Cuenta cuenta) {
+		if(monto>0) {
+			double nuevoSaldo = cuenta.getSaldoActual()+monto;
+			cuenta.setSaldoActual(nuevoSaldo);
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean retirar(double monto, Cuenta cuenta) {
+		if(monto>0 && monto<=cuenta.getSaldoActual()) {
+			double nuevoSaldo = cuenta.getSaldoActual()-monto;
+			cuenta.setSaldoActual(nuevoSaldo);
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean transferir(double monto, Cuenta origen, Cuenta destino) {
+		if(monto>0 && monto<=origen.getSaldoActual() && origen.getId() != destino.getId()) {
+			//double saldoOrigen = origen.getSaldoActual()-monto;
+			//origen.setSaldoActual(saldoOrigen);
+			
+			//double saldoDestino = destino.getSaldoActual()+monto;
+			//destino.setSaldoActual(saldoDestino);
+			retirar(monto,origen);
+			depositar(monto,destino);
+			
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 }

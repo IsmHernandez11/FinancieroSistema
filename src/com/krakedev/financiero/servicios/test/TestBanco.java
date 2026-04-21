@@ -1,0 +1,51 @@
+package com.krakedev.financiero.servicios.test;
+
+import com.krakedev.sistemafinanciero.Cliente;
+import com.krakedev.sistemafinanciero.Cuenta;
+import com.krakedev.financiero.servicios.Banco;
+
+public class TestBanco {
+	
+	public static void main(String[] args) {
+		Cliente cliente1 = new Cliente();
+		@SuppressWarnings("unused")
+		Cliente cliente2 = new Cliente("1752724748","Ana","Mopo");
+		Banco banco = new Banco();
+		
+		Cuenta cuenta1Creada = banco.crearCuenta(cliente1);
+		cuenta1Creada.imprimir();
+		
+		Cuenta cuenta2Creada = banco.crearCuenta(cliente1);
+		cuenta2Creada.imprimir();
+		
+		System.out.println("----DEPOSITOS----");
+		boolean resultado=banco.depositar(900, cuenta2Creada);
+		System.out.println(resultado);
+		cuenta2Creada.imprimir();
+		
+		resultado =banco.depositar(-80, cuenta2Creada);
+		System.out.println(resultado);
+		cuenta2Creada.imprimir();
+		
+		System.out.println("----RETIROS----");
+		resultado=banco.retirar(20, cuenta2Creada);
+		System.out.println(resultado);
+		cuenta2Creada.imprimir();
+		
+		resultado=banco.retirar(20, cuenta2Creada);
+		System.out.println(resultado);
+		cuenta2Creada.imprimir();
+		
+		System.out.println("----TRANSFERENCIAS----");
+		resultado=banco.transferir(20, cuenta2Creada,cuenta1Creada);
+		System.out.println(resultado);
+		cuenta1Creada.imprimir();
+		cuenta2Creada.imprimir();
+		
+		resultado=banco.transferir(1000, cuenta1Creada,cuenta2Creada);
+		System.out.println(resultado);
+		cuenta1Creada.imprimir();
+		cuenta2Creada.imprimir();
+	}
+	
+}
