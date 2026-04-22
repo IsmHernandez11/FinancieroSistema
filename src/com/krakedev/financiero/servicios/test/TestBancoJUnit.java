@@ -24,7 +24,7 @@ public class TestBancoJUnit {
 		
 		// Arrange
 		Banco banco = new Banco();
-		Cliente cliente = new Cliente("1723456789", "Ana", "Perez");
+		Cliente cliente = new Cliente("1250482401", "Ismael", "Hernandez");
 
 		// Act
 		Cuenta cuenta = banco.crearCuenta(cliente);
@@ -61,17 +61,13 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testCrearCuentaConClienteVacio() {
-		// Valida que se pueda crear una cuenta con un cliente construido
-		// con el constructor vacío, y que igual quede asociado como propietario.
-		
-		// Arrange
+
 		Banco banco = new Banco();
 		Cliente cliente = new Cliente();
 
-		// Act
+	
 		Cuenta cuenta = banco.crearCuenta(cliente);
 
-		// Assert
 		assertNotNull(cuenta);
 		assertEquals(cliente, cuenta.getPropietario());
 		assertEquals("1000", cuenta.getId());
@@ -80,10 +76,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testDepositarMontoPositivo() {
-		// Valida el caso correcto:
-		// si se deposita un monto positivo, el depósito debe realizarse
-		// y el saldo debe aumentar en ese valor.
-		
+
 		// Arrange
 		Banco banco = new Banco();
 		Cuenta cuenta = new Cuenta("C001");
@@ -98,10 +91,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testDepositarMontoPositivoConSaldoPrevio() {
-		// Valida que al depositar en una cuenta que ya tiene saldo,
-		// el nuevo saldo sea la suma del saldo anterior más el depósito.
-		
-		// Arrange
+	
 		Banco banco = new Banco();
 		Cuenta cuenta = new Cuenta("C002");
 		cuenta.setSaldoActual(200.0);
@@ -133,9 +123,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testDepositarCero() {
-		// Valida un valor límite inválido:
-		// si el monto es 0, no debe realizarse el depósito
-		// y el saldo debe permanecer igual.
+	
 		
 		// Arrange
 		Banco banco = new Banco();
@@ -152,9 +140,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testDepositarMontoNegativo() {
-		// Valida una entrada inválida:
-		// si el monto es negativo, no debe realizarse el depósito
-		// y el saldo no debe cambiar.
+	
 		
 		// Arrange
 		Banco banco = new Banco();
@@ -192,8 +178,6 @@ public class TestBancoJUnit {
 	
 	@Test
 	public void testRetirarCasoCorrecto() {
-		// Valida que al retirar un monto válido menor al saldo
-		// el retiro se realice y el saldo disminuya correctamente
 		
 		// Arrange
 		Banco banco = new Banco();
@@ -210,9 +194,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testRetirarTodoElSaldo() {
-		// Valida que se pueda retirar exactamente todo el saldo
-		// y la cuenta quede en cero
-		
+	
 		// Arrange
 		Banco banco = new Banco();
 		Cuenta cuenta = new Cuenta("C002");
@@ -228,8 +210,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testRetirarMontoMayorAlSaldo() {
-		// Valida que no se permita retirar un monto mayor al saldo disponible
-		
+	
 		// Arrange
 		Banco banco = new Banco();
 		Cuenta cuenta = new Cuenta("C003");
@@ -245,44 +226,41 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testRetirarMontoCero() {
-		// Valida que no se pueda retirar un monto igual a cero
 		
-		// Arrange
+		
 		Banco banco = new Banco();
 		Cuenta cuenta = new Cuenta("C004");
 		cuenta.setSaldoActual(50);
 
-		// Act
+		
 		boolean resultado = banco.retirar(0, cuenta);
 
-		// Assert
+	
 		assertFalse(resultado);
 		assertEquals(50, cuenta.getSaldoActual(), 0.0001);
 	}
 
 	@Test
 	public void testRetirarMontoNegativo() {
-		// Valida que no se permita retirar montos negativos
-		
+	
 		// Arrange
 		Banco banco = new Banco();
 		Cuenta cuenta = new Cuenta("C005");
 		cuenta.setSaldoActual(100);
 
-		// Act
+	
 		boolean resultado = banco.retirar(-30, cuenta);
 
-		// Assert
+		
 		assertFalse(resultado);
 		assertEquals(100, cuenta.getSaldoActual(), 0.0001);
 	}
 
 	@Test
 	public void testRetirarSaldoMinimo() {
-		// Valida un caso límite donde el saldo es muy pequeño
-		// pero el retiro sigue siendo válido
 		
-		// Arrange
+		
+		
 		Banco banco = new Banco();
 		Cuenta cuenta = new Cuenta("C006");
 		cuenta.setSaldoActual(0.5);
@@ -297,9 +275,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testNoSeModificaSaldoCuandoFallaRetiro() {
-		// Valida que si el retiro no es válido,
-		// el saldo permanezca exactamente igual
-		
+
 		// Arrange
 		Banco banco = new Banco();
 		Cuenta cuenta = new Cuenta("C007");
@@ -315,9 +291,7 @@ public class TestBancoJUnit {
 	
 	@Test
 	public void testTransferirCasoCorrecto() {
-		// Valida que una transferencia válida reste saldo a la cuenta origen
-		// y sume saldo a la cuenta destino
-		
+
 		// Arrange
 		Banco banco = new Banco();
 		Cuenta origen = new Cuenta("C001");
@@ -336,9 +310,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testTransferirMontoIgualAlSaldoOrigen() {
-		// Valida que se pueda transferir exactamente todo el saldo disponible
-		// de la cuenta origen
-		
+
 		// Arrange
 		Banco banco = new Banco();
 		Cuenta origen = new Cuenta("C003");
@@ -357,9 +329,7 @@ public class TestBancoJUnit {
 
 	@Test
 	public void testTransferirMontoMayorAlSaldo() {
-		// Valida que no se permita transferir un monto mayor al saldo
-		// disponible en la cuenta origen
-		
+
 		// Arrange
 		Banco banco = new Banco();
 		Cuenta origen = new Cuenta("C005");
